@@ -152,6 +152,8 @@
 #include "shared_memory_connection.h"
 #endif
 
+#include <swp.h>
+
 using std::min;
 using std::max;
 using std::vector;
@@ -5023,6 +5025,8 @@ int mysqld_main(int argc, char **argv)
   */
   set_super_read_only_post_init();
 
+  swp_init();
+
   DBUG_PRINT("info", ("Block, listening for incoming connections"));
 
   (void)MYSQL_SET_STAGE(0 ,__FILE__, __LINE__);
@@ -5047,6 +5051,8 @@ int mysqld_main(int argc, char **argv)
   server_operational_state= SERVER_SHUTTING_DOWN;
 
   DBUG_PRINT("info", ("No longer listening for incoming connections"));
+
+  swp_deinit();
 
   mysql_audit_notify(MYSQL_AUDIT_SERVER_SHUTDOWN_SHUTDOWN,
                      MYSQL_AUDIT_SERVER_SHUTDOWN_REASON_SHUTDOWN,
