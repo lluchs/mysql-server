@@ -24,8 +24,6 @@ The actual communication is handled by the net_xxx functions in net_serv.cc
 #include "sql_class.h"                          // THD
 #include <stdarg.h>
 
-#include <swp.h>
-
 using std::min;
 using std::max;
 
@@ -943,8 +941,6 @@ bool Protocol_classic::parse_packet(union COM_DATA *data,
     break;
   }
   
-  SWP_MARK;
-
   return false;
 
   malformed:
@@ -968,8 +964,6 @@ int Protocol_classic::get_command(COM_DATA *com_data, enum_server_command *cmd)
   // read packet from the network
   if(int rc= read_packet())
     return rc;
-
-  SWP_MARK;
 
   /*
     'packet_length' contains length of data, as it was stored in packet
