@@ -41,6 +41,8 @@
 #include "partition_info.h"           // partition_info
 #include "probes_mysql.h"             // MYSQL_INSERT_START
 
+#include <swp.h>
+
 static bool check_view_insertability(THD *thd, TABLE_LIST *view,
                                      const TABLE_LIST *insert_table_ref);
 
@@ -3080,6 +3082,8 @@ bool Sql_cmd_insert::execute(THD *thd)
 {
   DBUG_ASSERT(thd->lex->sql_command == SQLCOM_REPLACE ||
               thd->lex->sql_command == SQLCOM_INSERT);
+
+  SWP_MARK;
 
   bool res= false;
   LEX *const lex= thd->lex;

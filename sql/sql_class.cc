@@ -60,6 +60,8 @@
 
 #include "mysql/psi/mysql_ps.h"
 
+#include <swp.h>
+
 using std::min;
 using std::max;
 
@@ -4687,6 +4689,7 @@ bool THD::send_result_set_row(List<Item> *row_items)
 
 void THD::send_statement_status()
 {
+  SWP_MARK;
   DBUG_ENTER("send_statement_status");
   DBUG_ASSERT(!get_stmt_da()->is_sent());
   bool error= false;

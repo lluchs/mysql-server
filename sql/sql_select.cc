@@ -48,6 +48,8 @@
 
 #include <algorithm>
 
+#include <swp.h>
+
 using std::max;
 using std::min;
 
@@ -97,6 +99,8 @@ uint find_shortest_key(TABLE *table, const key_map *usable_keys);
 bool handle_query(THD *thd, LEX *lex, Query_result *result,
                   ulonglong added_options, ulonglong removed_options)
 {
+  SWP_MARK;
+
   DBUG_ENTER("handle_query");
 
   SELECT_LEX_UNIT *const unit= lex->unit;

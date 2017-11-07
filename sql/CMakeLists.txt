@@ -384,7 +384,8 @@ DTRACE_INSTRUMENT(sql)
 TARGET_LINK_LIBRARIES(sql ${MYSQLD_STATIC_PLUGIN_LIBS} 
   mysys mysys_ssl dbug strings vio regex binlogevents_static
   ${LIBWRAP} ${LIBCRYPT} ${LIBDL}
-  ${SSL_LIBRARIES})
+  ${SSL_LIBRARIES}
+  swp)
 
 #
 # On Windows platform we compile in the clinet-side Windows Native Authentication
@@ -449,9 +450,6 @@ ELSE()
 ENDIF()
 
 MYSQL_ADD_EXECUTABLE(mysqld ${MYSQLD_SOURCE} DESTINATION ${INSTALL_SBINDIR} COMPONENT Server)
-
-find_library(SWP NAMES swp)
-target_link_libraries(mysqld ${SWP})
 
 OPTION(DEBUG_EXTNAME "Build server as mysqld-debug (debug builds only)" OFF)
 MARK_AS_ADVANCED(DEBUG_EXTNAME)

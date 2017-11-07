@@ -43,6 +43,8 @@
 #include "probes_mysql.h"             // MYSQL_UPDATE_START
 #include "sql_parse.h"                // all_tables_not_ok
 
+#include <swp.h>
+
 /**
    True if the table's input and output record buffers are comparable using
    compare_records(TABLE*).
@@ -3000,6 +3002,7 @@ bool Sql_cmd_update::execute_multi_table_update(THD *thd)
 
 bool Sql_cmd_update::execute(THD *thd)
 {
+  SWP_MARK;
   if (thd->lex->sql_command == SQLCOM_UPDATE_MULTI)
   {
     return multi_update_precheck(thd, thd->lex->select_lex->get_table_list()) ||

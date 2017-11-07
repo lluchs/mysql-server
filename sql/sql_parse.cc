@@ -112,6 +112,8 @@
 #include <algorithm>
 using std::max;
 
+#include <swp.h>
+
 /**
   @defgroup Runtime_Environment Runtime Environment
   @{
@@ -937,6 +939,8 @@ bool do_command(THD *thd)
   thd->m_server_idle= true;
   rc= thd->get_protocol()->get_command(&com_data, &command);
   thd->m_server_idle= false;
+
+  SWP_MARK;
 
   if (rc)
   {
@@ -2420,6 +2424,7 @@ static inline void binlog_gtid_end_transaction(THD *thd)
 int
 mysql_execute_command(THD *thd, bool first_level)
 {
+  SWP_MARK;
   int res= FALSE;
   LEX  *const lex= thd->lex;
   /* first SELECT_LEX (have special meaning for many of non-SELECTcommands) */
@@ -5114,6 +5119,8 @@ static bool execute_sqlcom_select(THD *thd, TABLE_LIST *all_tables)
   LEX	*lex= thd->lex;
   bool statement_timer_armed= false;
   bool res;
+
+  SWP_MARK;
 
   /* assign global limit variable if limit is not given */
   {
